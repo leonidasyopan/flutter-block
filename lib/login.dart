@@ -1,7 +1,13 @@
+import 'package:bloc_youtube/bloc/login_bloc.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 
 class LoginPage extends StatefulWidget {
   static const routeName = 'LOGIN_PAGE';
+
+  final String errorMessage;
+
+  LoginPage({this.errorMessage});
 
   @override
   _LoginPageState createState() => _LoginPageState();
@@ -9,11 +15,16 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
   final _emailController = TextEditingController(text: 'leonidas@yopan.com.br');
-  final _passwordController = TextEditingController(text: '123123');
+  final _passwordController = TextEditingController(text: '12345');
 
   @override
   Widget build(BuildContext context) {
-    void _authenticate() {}
+    final bloc = BlocProvider.of<LoginBloc>(context);
+
+    void _authenticate() {
+      final signInEvent = SignInEvent(email: _emailController.text, password: _passwordController.text);
+      bloc.add(signInEvent);
+    }
 
     return Scaffold(
       body: Container(
@@ -31,6 +42,7 @@ class _LoginPageState extends State<LoginPage> {
                 obscureText: true,
               ),
               SizedBox(height: 30),
+              widget.errorMessage == null ? SizedBox() : Text(widget.errorMessage),
               Row(
                 children: <Widget>[
                   Expanded(

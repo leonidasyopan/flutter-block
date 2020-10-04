@@ -12,6 +12,11 @@ class LoginInitial extends LoginState {
   List<Object> get props => [];
 }
 
+class StartLoginState extends LoginState {
+  @override
+  List<Object> get props => [];
+}
+
 class SuccessLoginState extends LoginState {
   final User user;
 

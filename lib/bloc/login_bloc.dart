@@ -16,6 +16,29 @@ class LoginBloc extends Bloc<LoginEvent, LoginState> {
   Stream<LoginState> mapEventToState(
     LoginEvent event,
   ) async* {
-    // TODO: implement mapEventToState
+    if (event is SignInEvent) {
+      try {
+        yield LoginInitial();
+        final user = await authenticate(event.email, event.password);
+        if (user == null) {
+          yield ErrorLoginState(message: 'Usuário e/ou Senha Invalidos');
+        } else {
+          yield SuccessLoginState(user: user);
+        }
+      } catch (e) {
+        yield ErrorLoginState(message: 'Algo deu errado. Tente novamente');
+        print(e);
+      }
+    }
+  }
+
+  Future<User> authenticate(String email, String password) {
+    return Future.delayed(Duration(seconds: 3), () {
+      if (email == 'leonidas@yopan.com.br' && password == '12345') {
+        return User(email: email, name: 'Leonidas Yopan');
+      }
+
+      return null;
+    });
   }
 }
