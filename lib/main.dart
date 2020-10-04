@@ -7,7 +7,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
+      title: 'Flutter Bloc',
       routes: <String, WidgetBuilder>{
         MyHomePage.routeName: (context) => MyHomePage(title: 'Flutter Demo Home Page'),
         LoginPage.routeName: (context) => LoginPage(),
